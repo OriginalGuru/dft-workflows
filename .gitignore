@@ -1,0 +1,51 @@
+# VASP output files
+OUTCAR
+vasprun.xml
+CHGCAR
+WAVECAR
+CONTCAR
+EIGENVAL
+DOSCAR
+OSZICAR
+PROCAR
+IBZKPT
+CHG
+XDATCAR
+PCDAT
+REPORT
+HILLSPOT
+findsym.log
+findsym.cif
+findsym_input.txt
+
+# QE output files
+*.out
+*.save/
+*.wfc*
+*.mix*
+tmp/
+wfc*/
+
+# Phonopy output files
+FORCE_SETS
+FORCE_CONSTANTS
+phonopy.yaml
+phonopy_disp.yaml
+*.freq
+*.dos
+band.yaml
+mesh.yaml
+qpoints.yaml
+thermal_properties.yaml
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+
+# Editor
+.DS_Store
+*.swp
+*~
