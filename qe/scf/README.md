@@ -11,7 +11,7 @@ ground-state charge density and total energy on Lonestar6 (TACC).
 ```
 scf/
 ├── scf.in          # pw.x input file
-├── jobscript.sh    # Slurm submission script
+├── jobscript       # Slurm submission script
 └── README.md
 ```
 
@@ -25,7 +25,7 @@ Pseudopotentials are **not** stored in the repo. See
 ```bash
 # 1. Set pseudo_dir in scf.in to your pseudopotential directory (see below)
 # 2. Submit
-sbatch jobscript.sh
+sbatch jobscript
 ```
 
 Output lands in `results_<JOBID>/` in the same directory you submitted from.
@@ -77,7 +77,7 @@ not run `pw.x` directly on the login node — you write a job script and
 *submit* it to a queue. Slurm allocates compute nodes, runs your script,
 and writes stdout/stderr to a log file.
 
-### Key `#SBATCH` directives in `jobscript.sh`
+### Key `#SBATCH` directives in `jobscript`
 
 | Directive | Value | Meaning |
 |---|---|---|
@@ -93,7 +93,7 @@ and writes stdout/stderr to a log file.
 ### Useful Slurm commands
 
 ```bash
-sbatch jobscript.sh       # submit a job
+sbatch jobscript          # submit a job
 squeue -u $USER           # check your jobs in the queue
 scancel <JOBID>           # cancel a job
 seff <JOBID>              # efficiency report after job completes
@@ -181,7 +181,7 @@ O    0.0  0.0  0.5
 
 ---
 
-## The job script (`jobscript.sh`)
+## The job script (`jobscript`)
 
 ```bash
 RUNDIR=$SCRATCH/qe_runs/${SLURM_JOB_ID}

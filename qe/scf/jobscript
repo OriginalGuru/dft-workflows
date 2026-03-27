@@ -30,14 +30,13 @@ echo "Job started at $(date) on $(hostname)"
 
 export OMP_NUM_THREADS=1
 
-echo "    Starting SCF at $(date)"
+echo "  Starting SCF at $(date)"
 ibrun pw.x -input scf.in > scf.out
-echo "    SCF done at $(date)"
+echo "  SCF done at $(date)"
 
 # --- Stage outputs back to $WORKDIR ---
 mkdir -p $WORKDIR/results_${SLURM_JOB_ID}
-rsync -av $RUNDIR/ $WORKDIR/results_${SLURM_JOB_ID}/
-
+rsync -a --exclude 'outdir/SrTiO3.save/' --exclude 'wfc*.dat' $RUNDIR/ $WORKDIR/results_${SLURM_JOB_ID}/
 JOB_END=$(date +%s)
 ELAPSED=$(( JOB_END - JOB_START ))
 echo "Job finished at $(date)"
