@@ -1,0 +1,44 @@
+#!/bin/bash
+#SBATCH -J qe
+#SBATCH -p development
+#SBATCH -N 1
+#SBATCH -n 32
+#SBATCH -A PHY24018
+#SBATCH -o slurm-%j.log
+#SBATCH -e slurm-%j.log
+#SBATCH -t 00:05:00
+
+# --- Paths ---
+WORKDIR=$SLURM_SUBMIT_DIR
+RUNDIR=$SCRATCH/qe_runs/${SLURM_JOB_ID}
+
+mkdir -p $RUNDIR
+cd $RUNDIR
+
+# --- Stage inputs ---
+cp $WORKDIR/relax.in .
+
+# --- Modules ---
+module purge
+module load intel/19.1.1 impi/19.0.9
+module load qe/7.3
+module list
+
+# --- Run ---
+JOB_START=$(date +%s)
+echo "Job started at $(date) on $(hostname)"
+
+export OMP_NUM_THREADS=1
+
+echo "  Starting pw.x relax at $(date)"
+ibrun pw.x -input relax.in > relax.out
+echo "  relax done at $(date)"
+
+# --- Stage outputs back to $WORKDIR ---
+mkdir -p $WORKDIR/results_${SLURM_JOB_ID}
+rsync -a --exclude 'outdir/*.save/' --exclude 'wfc*.dat' $RUNDIR/ $WORKDIR/results_${SLURM_JOB_ID}/
+JOB_END=$(date +%s)
+ELAPSED=$(( JOB_END - JOB_START ))
+echo "Job finished at $(date)"
+printf "Total wall time: %02d:%02d:%02d\n" \
+    $(( ELAPSED/3600 )) $(( (ELAPSED%3600)/60 )) $(( ELAPSED%60 ))

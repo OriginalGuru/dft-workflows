@@ -84,11 +84,11 @@ and writes stdout/stderr to a log file.
 | `-J qe_scf` | job name | Label shown in `squeue` |
 | `-p development` | partition | Queue to submit to. `development` is for short test runs (≤ 30 min, ≤ 4 nodes). Change to `normal` for production. |
 | `-N 1` | nodes | Number of compute nodes |
-| `-n 64` | tasks | Total MPI ranks. LS6 nodes have 128 cores; 64 uses half a node. |
+| `-n 32` | tasks | Total MPI ranks. LS6 nodes have 128 cores; 64 uses half a node. |
 | `-A PHY24018` | allocation | Charge hours to this project account |
 | `-o slurm-%j.log` | log file | Merged stdout and stderr; `%j` is replaced by the job ID |
 | `-e slurm-%j.log` | log file | Pointed to the same file to merge stderr into the log |
-| `-t 00:30:00` | time limit | Wall clock limit (HH:MM:SS). Job is killed if exceeded. |
+| `-t 00:05:00` | time limit | Wall clock limit (HH:MM:SS). Job is killed if exceeded. |
 
 ### Useful Slurm commands
 
@@ -125,12 +125,12 @@ prefix       = 'SrTiO3'        ! filename prefix for all output files
 ibrav   = 0     ! supply cell vectors explicitly via CELL_PARAMETERS
 nat     = 5     ! number of atoms in the unit cell
 ntyp    = 3     ! number of atomic species (Sr, Ti, O)
-ecutwfc = 80    ! plane-wave kinetic energy cutoff (Ry)
-ecutrho = 800   ! charge density cutoff (Ry); 10× ecutwfc for PAW
+ecutwfc = 60    ! plane-wave kinetic energy cutoff (Ry)
+ecutrho = 600   ! charge density cutoff (Ry); 10× ecutwfc for PAW
 ```
 
 > **Cutoffs:** For PAW pseudopotentials `ecutrho` should be ~4–10×
-> `ecutwfc`. Here 800 Ry = 10 × 80 Ry, which is conservative and safe
+> `ecutwfc`. Here 600 Ry = 10 × 60 Ry, which is conservative and safe
 > for transition metals.
 
 ### `&electrons` — SCF solver
@@ -157,9 +157,9 @@ O  15.999 O.pbesol-n-kjpaw_psl.1.0.0.UPF
 
 **`K_POINTS automatic`** — Monkhorst-Pack k-point mesh:
 ```
-8 8 8  0 0 0
+4 4 4  0 0 0
 ```
-8×8×8 mesh, no offset. Converge this for your system.
+4×4×4 mesh, no offset. Converge this for your system.
 
 **`CELL_PARAMETERS (angstrom)`** — lattice vectors. SrTiO₃ is cubic,
 *a* = 3.905 Å:
