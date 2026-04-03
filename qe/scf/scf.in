@@ -9,8 +9,8 @@
  ibrav     = 0,
  nat       = 5,
  ntyp      = 3,
- ecutwfc   = 80,
- ecutrho   = 800,
+ ecutwfc   = 60,
+ ecutrho   = 600,
 /
 &electrons
  diagonalization = 'david',
@@ -27,7 +27,7 @@ Ti 47.867 Ti.pbesol-spn-kjpaw_psl.1.0.0.UPF
 O  15.999 O.pbesol-n-kjpaw_psl.1.0.0.UPF
 
 K_POINTS automatic
-8 8 8  0 0 0
+4 4 4  0 0 0
 
 CELL_PARAMETERS (angstrom)
    3.905000000   0.000000000   0.000000000
