@@ -1,8 +1,0 @@
-&dos
- prefix = 'SrTiO3',
- outdir = './outdir/',
- fildos = 'SrTiO3.dos',
- Emin   = -30.0,
- Emax   =  20.0,
- DeltaE =   0.05,
-/
