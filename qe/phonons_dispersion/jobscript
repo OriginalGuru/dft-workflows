@@ -63,7 +63,7 @@ printf "matdyn.x done at %s — elapsed %02d:%02d:%02d\n" "$(date)" $((DT/3600))
 
 # --- Stage outputs back to $WORKDIR ---
 mkdir -p $WORKDIR/results_${SLURM_JOB_ID}
-rsync -a --exclude 'outdir/*.save/' --exclude 'wfc*.dat' $RUNDIR/ $WORKDIR/results_${SLURM_JOB_ID}/
+rsync -a --exclude 'outdir/*.save/' --exclude '*wfc*.dat' $RUNDIR/ $WORKDIR/results_${SLURM_JOB_ID}/
 
 JOB_END=$(date +%s)
 ELAPSED=$(( JOB_END - JOB_START ))
