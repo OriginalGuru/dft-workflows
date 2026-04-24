@@ -1,0 +1,5 @@
+&bands
+ prefix = 'SrTiO3',
+ outdir = './outdir/',
+ filband = 'SrTiO3.bands.dat',
+/

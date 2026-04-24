@@ -1,0 +1,45 @@
+&control
+ calculation  = 'nscf',
+ restart_mode = 'from_scratch',
+ pseudo_dir   = '/work/XXXX/YOUR_USERNAME/ls6/qe/pseudos/pslibrary',
+ outdir       = './outdir/',
+ prefix       = 'SrTiO3',
+ verbosity    = 'high',
+/
+&system
+ ibrav       = 0,
+ nat         = 5,
+ ntyp        = 3,
+ ecutwfc     = 60,
+ ecutrho     = 600,
+ occupations = 'fixed',
+ nbnd        = 30,
+/
+&electrons
+ diagonalization = 'david',
+ conv_thr        = 1.0e-9,
+ mixing_beta     = 0.2,
+/
+&ions
+/
+&cell
+/
+ATOMIC_SPECIES
+Sr 87.620 Sr.pbesol-spn-kjpaw_psl.1.0.0.UPF
+Ti 47.867 Ti.pbesol-spn-kjpaw_psl.1.0.0.UPF
+O  15.999 O.pbesol-n-kjpaw_psl.1.0.0.UPF
+
+K_POINTS automatic
+8 8 8  0 0 0
+
+CELL_PARAMETERS (angstrom)
+   3.905000000   0.000000000   0.000000000
+   0.000000000   3.905000000   0.000000000
+   0.000000000   0.000000000   3.905000000
+
+ATOMIC_POSITIONS (crystal)
+Sr       0.500000000   0.500000000   0.500000000
+Ti       0.000000000   0.000000000   0.000000000
+O        0.500000000   0.000000000   0.000000000
+O        0.000000000   0.500000000   0.000000000
+O        0.000000000   0.000000000   0.500000000
