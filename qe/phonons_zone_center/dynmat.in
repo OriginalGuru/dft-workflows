@@ -1,0 +1,8 @@
+&input
+ fildyn = 'SrTiO3.dyn',
+ asr    = 'no',
+ filout = 'SrTiO3.dynmat.out',
+ filmol = 'SrTiO3.mol',
+ filxsf = 'SrTiO3.xsf',
+/
+

@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH -J qe_scf
+#SBATCH -J qe_vcrelax
 #SBATCH -p development
 #SBATCH -N 1
 #SBATCH -n 32
 #SBATCH -A PHY24018
 #SBATCH -o slurm-%j.log
 #SBATCH -e slurm-%j.log
-#SBATCH -t 00:05:00
+#SBATCH -t 00:30:00
 
 # --- Paths ---
 WORKDIR=$SLURM_SUBMIT_DIR
@@ -16,7 +16,7 @@ mkdir -p $RUNDIR
 cd $RUNDIR
 
 # --- Stage inputs ---
-cp $WORKDIR/scf.in .
+cp $WORKDIR/vc-relax.in .
 
 # --- Modules ---
 module purge
@@ -30,12 +30,12 @@ echo "Job started at $(date) on $(hostname)"
 
 export OMP_NUM_THREADS=1
 
-# --- SCF (pw.x) ---
-echo "Starting SCF (pw.x) at $(date)"
+# --- Variable-cell relaxation (pw.x) ---
+echo "Starting vc-relax (pw.x) at $(date)"
 T0=$(date +%s)
-ibrun pw.x -input scf.in > scf.out
+ibrun pw.x -input vc-relax.in > vc-relax.out
 T1=$(date +%s); DT=$((T1-T0))
-printf "SCF done at %s — elapsed %02d:%02d:%02d\n" "$(date)" $((DT/3600)) $(((DT%3600)/60)) $((DT%60))
+printf "vc-relax done at %s — elapsed %02d:%02d:%02d\n" "$(date)" $((DT/3600)) $(((DT%3600)/60)) $((DT%60))
 
 # --- Stage outputs back to $WORKDIR ---
 mkdir -p $WORKDIR/results_${SLURM_JOB_ID}
@@ -46,3 +46,4 @@ ELAPSED=$(( JOB_END - JOB_START ))
 echo "Job finished at $(date)"
 printf "Total wall time: %d-%02d:%02d:%02d\n" \
     $(( ELAPSED/86400 )) $(( (ELAPSED%86400)/3600 )) $(( (ELAPSED%3600)/60 )) $(( ELAPSED%60 ))
+

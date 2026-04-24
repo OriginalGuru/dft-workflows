@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH -J qe_scf
+#SBATCH -J qe_ph_gamma
 #SBATCH -p development
 #SBATCH -N 1
 #SBATCH -n 32
 #SBATCH -A PHY24018
 #SBATCH -o slurm-%j.log
 #SBATCH -e slurm-%j.log
-#SBATCH -t 00:05:00
+#SBATCH -t 01:00:00
 
 # --- Paths ---
 WORKDIR=$SLURM_SUBMIT_DIR
@@ -17,6 +17,8 @@ cd $RUNDIR
 
 # --- Stage inputs ---
 cp $WORKDIR/scf.in .
+cp $WORKDIR/ph.in .
+cp $WORKDIR/dynmat.in .
 
 # --- Modules ---
 module purge
@@ -30,12 +32,26 @@ echo "Job started at $(date) on $(hostname)"
 
 export OMP_NUM_THREADS=1
 
-# --- SCF (pw.x) ---
+# --- Step 1: SCF (pw.x) ---
 echo "Starting SCF (pw.x) at $(date)"
 T0=$(date +%s)
 ibrun pw.x -input scf.in > scf.out
 T1=$(date +%s); DT=$((T1-T0))
 printf "SCF done at %s — elapsed %02d:%02d:%02d\n" "$(date)" $((DT/3600)) $(((DT%3600)/60)) $((DT%60))
+
+# --- Step 2: Phonons at Gamma (ph.x) ---
+echo "Starting ph.x at $(date)"
+T0=$(date +%s)
+ibrun ph.x -input ph.in > ph.out
+T1=$(date +%s); DT=$((T1-T0))
+printf "ph.x done at %s — elapsed %02d:%02d:%02d\n" "$(date)" $((DT/3600)) $(((DT%3600)/60)) $((DT%60))
+
+# --- Step 3: dynmat.x (mode analysis) ---
+echo "Starting dynmat.x at $(date)"
+T0=$(date +%s)
+dynmat.x < dynmat.in > dynmat.out
+T1=$(date +%s); DT=$((T1-T0))
+printf "dynmat.x done at %s — elapsed %02d:%02d:%02d\n" "$(date)" $((DT/3600)) $(((DT%3600)/60)) $((DT%60))
 
 # --- Stage outputs back to $WORKDIR ---
 mkdir -p $WORKDIR/results_${SLURM_JOB_ID}
@@ -46,3 +62,4 @@ ELAPSED=$(( JOB_END - JOB_START ))
 echo "Job finished at $(date)"
 printf "Total wall time: %d-%02d:%02d:%02d\n" \
     $(( ELAPSED/86400 )) $(( (ELAPSED%86400)/3600 )) $(( (ELAPSED%3600)/60 )) $(( ELAPSED%60 ))
+

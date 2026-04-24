@@ -1,0 +1,15 @@
+&input
+ flfrc    = 'SrTiO3.fc',
+ flfrq    = 'SrTiO3.freq',
+ flvec    = 'SrTiO3.modes',
+ asr      = 'no',
+ q_in_band_form   = .true.,
+ q_in_cryst_coord = .true.,
+/
+5
+  0.0  0.0  0.0   40 ! GM
+  0.5  0.0  0.0   40 ! X
+  0.5  0.5  0.0   40 ! M
+  0.0  0.0  0.0   40 ! GM
+  0.5  0.5  0.5    1 ! R
+

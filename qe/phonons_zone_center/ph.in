@@ -1,0 +1,10 @@
+Phonons at Gamma for SrTiO3
+&inputph
+ prefix = 'SrTiO3',
+ outdir = './outdir/',
+ fildyn = 'SrTiO3.dyn',
+ ldisp  = .false.,
+ tr2_ph = 1.0d-14,
+/
+0.0 0.0 0.0
+

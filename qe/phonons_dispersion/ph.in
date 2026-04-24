@@ -1,0 +1,12 @@
+Phonons on q-mesh for SrTiO3
+&inputph
+ prefix = 'SrTiO3',
+ outdir = './outdir/',
+ fildyn = 'SrTiO3.dyn',
+ ldisp  = .true.,
+ nq1    = 2,
+ nq2    = 2,
+ nq3    = 2,
+ tr2_ph = 1.0d-14,
+/
+

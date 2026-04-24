@@ -1,9 +1,14 @@
 &control
- calculation  = 'scf',
+ calculation  = 'vc-relax',
  restart_mode = 'from_scratch',
  pseudo_dir   = '/work/XXXX/YOUR_USERNAME/ls6/qe/pseudos/pslibrary',
  outdir       = './outdir/',
  prefix       = 'SrTiO3',
+ tprnfor      = .true.,
+ tstress      = .true.,
+ forc_conv_thr = 1.0d-4,
+ etot_conv_thr = 1.0d-5,
+ nstep        = 100,
 /
 &system
  ibrav     = 0,
@@ -14,12 +19,17 @@
 /
 &electrons
  diagonalization = 'david',
- conv_thr        = 1.0e-9,
+ conv_thr        = 1.0e-10,
  mixing_beta     = 0.2,
 /
 &ions
+ ion_dynamics = 'bfgs',
 /
 &cell
+ cell_dynamics  = 'bfgs',
+ press          = 0.0,
+ press_conv_thr = 0.1,
+ cell_dofree    = 'all',
 /
 ATOMIC_SPECIES
 Sr 87.620 Sr.pbesol-spn-kjpaw_psl.1.0.0.UPF
